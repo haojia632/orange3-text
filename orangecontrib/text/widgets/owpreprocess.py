@@ -17,6 +17,7 @@ from orangecontrib.text.tag import StanfordPOSTagger, AveragedPerceptronTagger, 
     MaxEntTagger
 from orangecontrib.text.widgets.utils import widgets, ResourceLoader
 from orangecontrib.text.widgets.utils.concurrent import asynchronous
+from orangecontrib.text.import_documents import ImportDocuments
 
 
 def _i(name, icon_path='icons'):
@@ -209,17 +210,18 @@ class MultipleMethodModule(PreprocessorModule):
 
 class TokenizerModule(SingleMethodModule):
     attribute = 'tokenizer'
-    title = 'Tokenization'
+    title = '词句切分'
     toggle_enabled = True
 
     methods = [
         preprocess.tokenize.WordPunctTokenizer,
+        preprocess.tokenize.ChineseWordSegmenter,
         preprocess.tokenize.WhitespaceTokenizer,
         preprocess.tokenize.PunktSentenceTokenizer,
         preprocess.tokenize.RegexpTokenizer,
         preprocess.tokenize.TweetTokenizer,
     ]
-    REGEXP = 3
+    REGEXP = 4
     pattern = settings.Setting('\w+')
 
     method_index = settings.Setting(REGEXP)
@@ -227,7 +229,7 @@ class TokenizerModule(SingleMethodModule):
     def __init__(self, master):
         super().__init__(master)
 
-        label = gui.label(self, self, 'Pattern:')
+        label = gui.label(self, self, '表达式:')
         line_edit = widgets.ValidatedLineEdit(self, 'pattern',
                                               validator=preprocess.RegexpTokenizer.validate_regexp)
         line_edit.editingFinished.connect(self.pattern_changed)
@@ -758,7 +760,12 @@ if __name__ == '__main__':
     app = QApplication([])
     widget = OWPreprocess()
     widget.show()
-    corpus = Corpus.from_file('book-excerpts')
+    corpus = Corpus.from_file('chinese-example.tab')
+
+    # corpus = ImportDocuments("/Users/jia/Desktop/chinese")
+
     widget.set_data(corpus)
     app.exec()
     widget.saveSettings()
+
+

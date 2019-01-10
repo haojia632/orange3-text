@@ -3,6 +3,9 @@ from nltk import tokenize
 
 from orangecontrib.text.misc import wait_nltk_data
 
+import jieba
+import jieba.analyse
+
 __all__ = ['BaseTokenizer', 'WordPunctTokenizer', 'PunktSentenceTokenizer',
            'RegexpTokenizer', 'WhitespaceTokenizer', 'TweetTokenizer']
 
@@ -41,13 +44,21 @@ class BaseTokenizer:
 class WordPunctTokenizer(BaseTokenizer):
     """ Split by words and (keep) punctuation. """
     tokenizer = tokenize.WordPunctTokenizer()
-    name = 'Word & Punctuation'
+    name = '分词'
 
+class ChineseWordSegmenter(BaseTokenizer):
+    """ 郝佳添加中文分词模块 """
+    def tokenize(self, string):
+        print("执行：ChineseWordSegmenter")
+        
+        print(list(filter(lambda x: x != '', jieba.cut(string))))
+        return list(filter(lambda x: x != '', jieba.cut(string)))
+    name = '中文分词'
 
 class PunktSentenceTokenizer(BaseTokenizer):
     """ Split by full-stop, keeping entire sentences. """
     tokenizer = tokenize.PunktSentenceTokenizer()
-    name = 'Sentence'
+    name = '分句'
 
     @wait_nltk_data
     def __init__(self):
@@ -57,12 +68,12 @@ class PunktSentenceTokenizer(BaseTokenizer):
 class WhitespaceTokenizer(BaseTokenizer):
     """ Split only by whitespace. """
     tokenizer = tokenize.WhitespaceTokenizer()
-    name = 'Whitespace'
+    name = '空格'
 
 
 class RegexpTokenizer(BaseTokenizer):
     """ Split by regular expression, default keeps only words. """
-    name = 'Regexp'
+    name = '正则表达式'
 
     def __init__(self, pattern=r'\w+'):
         self._pattern = pattern
