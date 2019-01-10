@@ -62,7 +62,7 @@ class OWNYT(OWWidget):
             elif not silent:
                 self.Error.invalid_credentials()
 
-    name = "NY Times"
+    name = "NY Times 郝佳"
     description = "Fetch articles from the New York Times search API."
     icon = "icons/NYTimes.svg"
     priority = 130

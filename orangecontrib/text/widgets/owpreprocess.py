@@ -245,7 +245,7 @@ class TokenizerModule(SingleMethodModule):
 
 class NormalizationModule(SingleMethodModule):
     attribute = 'normalizer'
-    title = 'Normalization'
+    title = '规范化'
     toggle_enabled = True
     enabled = settings.Setting(False)
 
@@ -266,7 +266,7 @@ class NormalizationModule(SingleMethodModule):
     def __init__(self, master):
         super().__init__(master)
 
-        label = gui.label(self, self, 'Language:')
+        label = gui.label(self, self, '语言:')
         label.setAlignment(Qt.AlignRight)
         self.method_layout.addWidget(label, self.SNOWBALL, 1)
         snowball_box = widgets.ComboBox(self, 'snowball_language',
@@ -279,7 +279,7 @@ class NormalizationModule(SingleMethodModule):
                                               checked=self.udpipe_tokenizer)
         self.udpipe_tokenizer_box.stateChanged.connect(self.change_tokenizer)
         self.method_layout.addWidget(self.udpipe_tokenizer_box, self.UDPIPE, 1)
-        self.udpipe_label = gui.label(self, self, 'Language:')
+        self.udpipe_label = gui.label(self, self, '语言:')
         self.udpipe_label.setAlignment(Qt.AlignRight)
         self.method_layout.addWidget(self.udpipe_label, self.UDPIPE, 2)
         self.udpipe_models = UDPipeModels()
@@ -344,7 +344,7 @@ class NormalizationModule(SingleMethodModule):
 
 class TransformationModule(MultipleMethodModule):
     attribute = 'transformers'
-    title = 'Transformation'
+    title = '基本转换'
 
     methods = [
         preprocess.LowercaseTransformer,
@@ -584,8 +584,8 @@ class POSTaggingModule(SingleMethodModule):
 
 class OWPreprocess(OWWidget):
 
-    name = 'Preprocess Text'
-    description = 'Construct a text pre-processing pipeline.'
+    name = '文本预处理'
+    description = '构建文本预处理的管道'
     icon = 'icons/TextPreprocess.svg'
     priority = 200
 

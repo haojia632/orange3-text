@@ -42,7 +42,7 @@ class BaseNormalizer:
 
 
 class WordNetLemmatizer(BaseNormalizer):
-    name = 'WordNet Lemmatizer'
+    name = 'WordNet词形还原'
     normalizer = stem.WordNetLemmatizer().lemmatize
 
     @wait_nltk_data
@@ -63,12 +63,12 @@ class DictionaryLookupNormalizer(BaseNormalizer):
 
 
 class PorterStemmer(BaseNormalizer):
-    name = 'Porter Stemmer'
+    name = 'Porter主干提取'
     normalizer = stem.PorterStemmer().stem
 
 
 class SnowballStemmer(BaseNormalizer):
-    name = 'Snowball Stemmer'
+    name = 'Snowball主干提取'
     str_format = '{self.name} ({self.language})'
     supported_languages = [l.capitalize() for l in stem.SnowballStemmer.languages]
 
@@ -143,7 +143,7 @@ class UDPipeModels:
 
 
 class UDPipeLemmatizer(BaseNormalizer):
-    name = 'UDPipe Lemmatizer'
+    name = 'UDPipe词形还原'
     str_format = '{self.name} ({self.language})'
 
     def __init__(self, language='English'):

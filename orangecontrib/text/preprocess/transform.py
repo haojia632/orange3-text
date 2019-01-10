@@ -36,7 +36,7 @@ class BaseTransformer:
 
 class LowercaseTransformer(BaseTransformer):
     """ Converts all characters to lowercase. """
-    name = 'Lowercase'
+    name = '转小写'
 
     @classmethod
     def transform(cls, string):
@@ -45,7 +45,7 @@ class LowercaseTransformer(BaseTransformer):
 
 class StripAccentsTransformer(BaseTransformer):
     """ Removes accents. """
-    name = "Remove accents"
+    name = "去除时态"
 
     @classmethod
     def transform(cls, string):
@@ -54,7 +54,7 @@ class StripAccentsTransformer(BaseTransformer):
 
 class HtmlTransformer(BaseTransformer):
     """ Removes all html tags from string. """
-    name = "Parse html"
+    name = "解析HTML"
 
     @classmethod
     def transform(cls, string):
@@ -63,7 +63,7 @@ class HtmlTransformer(BaseTransformer):
 
 class UrlRemover(BaseTransformer):
     """ Removes hyperlinks. """
-    name = "Remove urls"
+    name = "删除链接"
     urlfinder = re.compile(r"((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)")
 
     @classmethod
