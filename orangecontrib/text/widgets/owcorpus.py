@@ -12,8 +12,8 @@ from orangecontrib.text.widgets.utils import widgets, QSize
 
 
 class OWCorpus(OWWidget):
-    name = "Corpus"
-    description = "Load a corpus of text documents."
+    name = "语料库"
+    description = "加载文档语料库."
     icon = "icons/TextFile.svg"
     priority = 100
     replaces = ["orangecontrib.text.widgets.owloadcorpus.OWLoadCorpus"]
@@ -28,7 +28,7 @@ class OWCorpus(OWWidget):
     resizing_enabled = True
 
     dlgFormats = (
-        "All readable files ({});;".format(
+        "所有可读文档 ({});;".format(
             '*' + ' *'.join(FileFormat.readers.keys())) +
         ";;".join("{} (*{})".format(f.DESCRIPTION, ' *'.join(f.EXTENSIONS))
                   for f in sorted(set(FileFormat.readers.values()),
@@ -44,13 +44,14 @@ class OWCorpus(OWWidget):
         "election-tweets-2016.tab",
         "friends-transcripts.tab",
         "andersen.tab",
+        "chinese-example.tab",
     ])
     used_attrs = ContextSetting([])
 
     class Error(OWWidget.Error):
-        read_file = Msg("Can't read file {} ({})")
-        no_text_features_used = Msg("At least one text feature must be used.")
-        corpus_without_text_features = Msg("Corpus doesn't have any textual features.")
+        read_file = Msg("无法读取文件 {} ({})")
+        no_text_features_used = Msg("至少使用一个文本特征")
+        corpus_without_text_features = Msg("语料库没有文本特征")
 
     def __init__(self):
         super().__init__()
@@ -58,24 +59,24 @@ class OWCorpus(OWWidget):
         self.corpus = None
 
         # Browse file box
-        fbox = gui.widgetBox(self.controlArea, "Corpus file", orientation=0)
+        fbox = gui.widgetBox(self.controlArea, "语料库文件", orientation=0)
         self.file_widget = widgets.FileWidget(
             recent_files=self.recent_files, icon_size=(16, 16),
             on_open=self.open_file, dialog_format=self.dlgFormats,
-            dialog_title='Open Orange Document Corpus',
-            reload_label='Reload', browse_label='Browse',
+            dialog_title='打开语料库文档',
+            reload_label='重新加载', browse_label='浏览',
             allow_empty=False, minimal_width=250,
         )
         fbox.layout().addWidget(self.file_widget)
 
         # Corpus info
-        ibox = gui.widgetBox(self.controlArea, "Corpus info", addSpace=True)
+        ibox = gui.widgetBox(self.controlArea, "语料库信息", addSpace=True)
         self.info_label = gui.label(ibox, self, "")
         self.update_info()
 
         # Used Text Features
         fbox = gui.widgetBox(self.controlArea, orientation=0)
-        ubox = gui.widgetBox(fbox, "Used text features", addSpace=False)
+        ubox = gui.widgetBox(fbox, "已使用的文本特征", addSpace=False)
         self.used_attrs_model = VariableListModel(enable_dnd=True)
         self.used_attrs_view = VariablesListItemView()
         self.used_attrs_view.setModel(self.used_attrs_model)
@@ -87,7 +88,7 @@ class OWCorpus(OWWidget):
         aa.rowsRemoved.connect(self.update_feature_selection)
 
         # Ignored Text Features
-        ibox = gui.widgetBox(fbox, "Ignored text features", addSpace=False)
+        ibox = gui.widgetBox(fbox, "未使用的文本特征", addSpace=False)
         self.unused_attrs_model = VariableListModel(enable_dnd=True)
         self.unused_attrs_view = VariablesListItemView()
         self.unused_attrs_view.setModel(self.unused_attrs_model)
@@ -96,7 +97,7 @@ class OWCorpus(OWWidget):
         # Documentation Data Sets & Report
         box = gui.hBox(self.controlArea)
         self.browse_documentation = gui.button(
-            box, self, "Browse documentation corpora",
+            box, self, "浏览语料库文档",
             callback=lambda: self.file_widget.browse(
                 get_sample_corpora_dir()),
             autoDefault=False,
@@ -155,23 +156,23 @@ class OWCorpus(OWWidget):
             text_feats = sum(m.is_string for m in dom.metas)
             other_feats = len(dom.attributes) + len(dom.metas) - text_feats
             text = \
-                "{} document(s), {} text features(s), {} other feature(s).". \
+                "{} 个文档, {} 个文本特征, {} 个其他特征.". \
                 format(len(corpus), text_feats, other_feats)
             if dom.has_continuous_class:
-                text += "<br/>Regression; numerical class."
+                text += "<br/>回归; 数值类."
             elif dom.has_discrete_class:
-                text += "<br/>Classification; discrete class with {} values.". \
+                text += "<br/>分类; 离散值含有 {} 种值.". \
                     format(len(dom.class_var.values))
             elif corpus.domain.class_vars:
-                text += "<br/>Multi-target; {} target variables.".format(
+                text += "<br/>多目标; {} 个目标变量.".format(
                     len(corpus.domain.class_vars))
             else:
-                text += "<br/>Data has no target variable."
+                text += "<br/>数据没有目标变量"
             text += "</p>"
             return text
 
         if self.corpus is None:
-            self.info_label.setText("No corpus loaded.")
+            self.info_label.setText("没有加载语料库")
         else:
             self.info_label.setText(describe(self.corpus))
 
@@ -206,7 +207,7 @@ class OWCorpus(OWWidget):
             if len(features):
                 return ', '.join([f.name for f in features])
             else:
-                return '(none)'
+                return '(无)'
 
         if self.corpus is not None:
             domain = self.corpus.domain

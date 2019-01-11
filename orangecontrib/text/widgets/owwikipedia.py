@@ -13,7 +13,7 @@ from orangecontrib.text.wikipedia import WikipediaAPI
 
 class OWWikipedia(OWWidget):
     """ Get articles from wikipedia. """
-    name = 'Wikipedia'
+    name = '维基百科'
     priority = 160
     icon = 'icons/Wikipedia.svg'
 
@@ -33,13 +33,13 @@ class OWWikipedia(OWWidget):
     language = settings.Setting('en')
     articles_per_query = settings.Setting(10)
 
-    info_label = 'Articles count {:d}'
+    info_label = '文章数量 {:d}'
 
     class Error(OWWidget.Error):
         api_error = Msg('API error: {}')
 
     class Warning(OWWidget.Warning):
-        no_text_fields = Msg('Text features are inferred when none are selected.')
+        no_text_fields = Msg('未选择文字功能时，将推断文字功能')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,28 +47,28 @@ class OWWikipedia(OWWidget):
         self.api = WikipediaAPI(on_error=self.Error.api_error)
         self.result = None
 
-        query_box = gui.hBox(self.controlArea, 'Query')
+        query_box = gui.hBox(self.controlArea, '查询')
 
         # Queries configuration
         layout = QGridLayout()
         layout.setSpacing(7)
 
         row = 0
-        self.query_edit = ListEdit(self, 'query_list', "Each line represents a "
-                                                  "separate query.", 100, self)
-        layout.addWidget(QLabel('Query word list:'), row, 0, 1, self.label_width)
+        self.query_edit = ListEdit(self, 'query_list', "每一行表示一个不同的查询"
+                                                  , 100, self)
+        layout.addWidget(QLabel('查询词:'), row, 0, 1, self.label_width)
         layout.addWidget(self.query_edit, row, self.label_width, 1,
                          self.widgets_width)
 
         # Language
         row += 1
         language_edit = ComboBox(self, 'language', tuple(sorted(lang2code.items())))
-        layout.addWidget(QLabel('Language:'), row, 0, 1, self.label_width)
+        layout.addWidget(QLabel('语言:'), row, 0, 1, self.label_width)
         layout.addWidget(language_edit, row, self.label_width, 1, self.widgets_width)
 
         # Articles per query
         row += 1
-        layout.addWidget(QLabel('Articles per query:'), row, 0, 1, self.label_width)
+        layout.addWidget(QLabel('每次查询文章数量:'), row, 0, 1, self.label_width)
         slider = gui.valueSlider(query_box, self, 'articles_per_query', box='',
                                  values=[1, 3, 5, 10, 25])
         layout.addWidget(slider.box, row, 1, 1, self.widgets_width)
@@ -77,15 +77,15 @@ class OWWikipedia(OWWidget):
         self.controlArea.layout().addWidget(query_box)
 
         self.controlArea.layout().addWidget(
-            CheckListLayout('Text includes', self, 'text_includes', self.attributes, cols=2,
+            CheckListLayout('包含的内容', self, 'text_includes', self.attributes, cols=2,
                             callback=self.set_text_features))
 
-        self.info_box = gui.hBox(self.controlArea, 'Info')
+        self.info_box = gui.hBox(self.controlArea, '基本信息')
         self.result_label = gui.label(self.info_box, self, self.info_label.format(0))
 
         self.button_box = gui.hBox(self.controlArea)
 
-        self.search_button = gui.button(self.button_box, self, 'Search', self.start_stop)
+        self.search_button = gui.button(self.button_box, self, '查询', self.start_stop)
         self.search_button.setFocusPolicy(Qt.NoFocus)
 
     def start_stop(self):
@@ -110,7 +110,7 @@ class OWWikipedia(OWWidget):
     def on_start(self):
         self.Error.api_error.clear()
         self.progressBarInit(None)
-        self.search_button.setText('Stop')
+        self.search_button.setText('停止')
         self.result_label.setText(self.info_label.format(0))
         self.Outputs.corpus.send(None)
 
@@ -118,7 +118,7 @@ class OWWikipedia(OWWidget):
     def on_result(self, result):
         self.result = result
         self.result_label.setText(self.info_label.format(len(result) if result else 0))
-        self.search_button.setText('Search')
+        self.search_button.setText('查询')
         self.set_text_features()
         self.progressBarFinished(None)
 
@@ -134,9 +134,9 @@ class OWWikipedia(OWWidget):
 
     def send_report(self):
         if self.result:
-            items = (('Language', code2lang[self.language]),
-                     ('Query', self.query_edit.toPlainText()),
-                     ('Articles count', len(self.result)))
+            items = (('语言', code2lang[self.language]),
+                     ('查询', self.query_edit.toPlainText()),
+                     ('文档数量', len(self.result)))
             self.report_items('Query', items)
 
 

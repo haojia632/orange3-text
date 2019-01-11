@@ -16,13 +16,13 @@ class WikipediaAPI:
         >>> corpus = api.search('en', ['Barack Obama', 'Hillary Clinton'])
     """
     metas = [
-        (data.StringVariable('Title'), lambda doc: getattr(doc, 'title')),
-        (data.StringVariable('Content'), lambda doc: getattr(doc, 'content')),
-        (data.StringVariable('Summary'), lambda doc: getattr(doc, 'summary')),
-        (data.StringVariable('Url'), lambda doc: getattr(doc, 'url')),
-        (data.ContinuousVariable('Page ID', number_of_decimals=0),
+        (data.StringVariable('题目'), lambda doc: getattr(doc, 'title')),
+        (data.StringVariable('内容'), lambda doc: getattr(doc, 'content')),
+        (data.StringVariable('摘要'), lambda doc: getattr(doc, 'summary')),
+        (data.StringVariable('连接'), lambda doc: getattr(doc, 'url')),
+        (data.ContinuousVariable('文章ID', number_of_decimals=0),
          lambda doc: int(getattr(doc, 'pageid'))),
-        (data.ContinuousVariable('Revision ID', number_of_decimals=0),
+        (data.ContinuousVariable('版本ID', number_of_decimals=0),
          lambda doc: int(getattr(doc, 'revision_id'))),
         (data.DiscreteVariable('Query'), lambda doc: getattr(doc, 'query')),
     ]

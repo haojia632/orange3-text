@@ -33,14 +33,14 @@ from orangecontrib.text.vectorization.base import BaseVectorizer,\
 
 
 class BowVectorizer(BaseVectorizer):
-    name = 'BoW Vectorizer'
+    name = '向量化'
 
-    COUNT = 'Count'
-    BINARY = 'Binary'
-    SUBLINEAR = 'Sublinear'
-    NONE = '(None)'
+    COUNT = '计数'
+    BINARY = '二进制'
+    SUBLINEAR = '次线性'
+    NONE = '无'
     IDF = 'IDF'
-    SMOOTH = 'Smooth IDF'
+    SMOOTH = '平滑 IDF'
     L1 = 'L1 (Sum of elements)'
     L2 = 'L2 (Euclidean)'
 

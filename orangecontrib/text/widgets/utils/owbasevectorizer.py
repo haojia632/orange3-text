@@ -32,14 +32,14 @@ class OWBaseVectorizer(OWWidget):
         self.corpus = None
         self.method = None
 
-        box = QGroupBox(title='Options')
+        box = QGroupBox(title='选项')
         box.setLayout(self.create_configuration_layout())
         self.controlArea.layout().addWidget(box)
 
         buttons_layout = QHBoxLayout()
         buttons_layout.addSpacing(15)
         buttons_layout.addWidget(
-            gui.auto_commit(None, self, 'autocommit', 'Commit', box=False)
+            gui.auto_commit(None, self, 'autocommit', '提交', '自动提交',box=False)
         )
         self.controlArea.layout().addLayout(buttons_layout)
         self.update_method()
