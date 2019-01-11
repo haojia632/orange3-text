@@ -10,7 +10,7 @@ from orangecontrib.text.corpus import Corpus
 
 
 class OWTweetProfiler(OWWidget):
-    name = "Tweet情感分析"
+    name = "推特情感分析"
     description = "检测推特中的情感"
     icon = "icons/TweetProfiler.svg"
     priority = 330
