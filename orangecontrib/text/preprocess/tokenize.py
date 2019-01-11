@@ -49,9 +49,6 @@ class WordPunctTokenizer(BaseTokenizer):
 class ChineseWordSegmenter(BaseTokenizer):
     """ 郝佳添加中文分词模块 """
     def tokenize(self, string):
-        print("执行：ChineseWordSegmenter")
-        
-        print(list(filter(lambda x: x != '', jieba.cut(string))))
         return list(filter(lambda x: x != '', jieba.cut(string)))
     name = '中文分词'
 

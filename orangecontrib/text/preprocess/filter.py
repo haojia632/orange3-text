@@ -75,6 +75,7 @@ class StopwordsFilter(BaseTokenFilter, WordListMixin):
             stopwords_listdir = [file for file in
                                  os.listdir(stopwords._get_root())
                                  if file.islower()]
+            print("stopwords._get_root():"+stopwords._get_root())
         except LookupError:  # when no NLTK data is available
             pass
 

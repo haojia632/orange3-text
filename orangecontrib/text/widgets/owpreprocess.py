@@ -365,7 +365,7 @@ class DummyKeepN:
 
 class FilteringModule(MultipleMethodModule):
     attribute = 'filters'
-    title = 'Filtering'
+    title = '文本过滤'
 
     methods = [
         preprocess.StopwordsFilter,
@@ -405,7 +405,7 @@ class FilteringModule(MultipleMethodModule):
         self.method_layout.addWidget(box, self.STOPWORDS, 1)
 
         box = widgets.FileWidget(recent_files=self.recent_sw_files,
-                                 dialog_title='Open a stop words source',
+                                 dialog_title='打开停用词库',
                                  dialog_format=self.dlgFormats,
                                  on_open=self.read_stopwords_file,
                                  browse_label='', reload_label='',
@@ -414,7 +414,7 @@ class FilteringModule(MultipleMethodModule):
         self.method_layout.addWidget(box, self.STOPWORDS, 2, 1, 1)
 
         box = widgets.FileWidget(recent_files=self.recent_lexicon_files,
-                                 dialog_title='Open a lexicon words source',
+                                 dialog_title='打开词典库',
                                  dialog_format=self.dlgFormats,
                                  on_open=self.read_lexicon_file,
                                  browse_label='', reload_label='',
