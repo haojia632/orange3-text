@@ -91,7 +91,7 @@ class PreprocessorModule(gui.OWComponent, QWidget):
         self.title_label.setStyleSheet('font-size: 12px; border: 2px solid red;')
         self.titleArea.addWidget(self.title_label)
 
-        self.off_label = QLabel('[disabled]')
+        self.off_label = QLabel('[停用]')
         self.off_label.setStyleSheet('color: #B0B0B0; margin-left: 5px;')
         self.titleArea.addWidget(self.off_label)
         self.off_label.hide()
@@ -360,7 +360,7 @@ class TransformationModule(MultipleMethodModule):
 
 class DummyKeepN:
     """ Keep top N tokens by document frequency. """
-    name = 'Most frequent tokens'
+    name = '频率最高的词'
 
 
 class FilteringModule(MultipleMethodModule):
@@ -380,7 +380,7 @@ class FilteringModule(MultipleMethodModule):
     REGEXP = 2
     FREQUENCY = 3
     KEEP_N = 4
-    dlgFormats = 'Only text files (*.txt);;All files (*)'
+    dlgFormats = '仅文本文件 (*.txt);;All files (*)'
 
     stopwords_language = settings.Setting('English')
 
@@ -405,7 +405,7 @@ class FilteringModule(MultipleMethodModule):
         self.method_layout.addWidget(box, self.STOPWORDS, 1)
 
         box = widgets.FileWidget(recent_files=self.recent_sw_files,
-                                 dialog_title='打开停用词库',
+                                 dialog_title='打开停用词',
                                  dialog_format=self.dlgFormats,
                                  on_open=self.read_stopwords_file,
                                  browse_label='', reload_label='',
@@ -414,7 +414,7 @@ class FilteringModule(MultipleMethodModule):
         self.method_layout.addWidget(box, self.STOPWORDS, 2, 1, 1)
 
         box = widgets.FileWidget(recent_files=self.recent_lexicon_files,
-                                 dialog_title='打开词典库',
+                                 dialog_title='打开词典',
                                  dialog_format=self.dlgFormats,
                                  on_open=self.read_lexicon_file,
                                  browse_label='', reload_label='',
@@ -515,7 +515,7 @@ class FilteringModule(MultipleMethodModule):
 
 class NgramsModule(PreprocessorModule):
     attribute = 'ngrams_range'
-    title = 'N-grams Range'
+    title = 'N-grams范围'
     toggle_enabled = True
     enabled = settings.Setting(False)
 
@@ -524,7 +524,7 @@ class NgramsModule(PreprocessorModule):
     def setup_method_layout(self):
         self.method_layout.addWidget(
             widgets.RangeWidget(None, self, 'ngrams_range', minimum=1, maximum=10, step=1,
-                                min_label='Range:', dtype=int,
+                                min_label='范围:', dtype=int,
                                 callback=self.update_value)
         )
 
@@ -533,7 +533,7 @@ class NgramsModule(PreprocessorModule):
 
 
 class POSTaggingModule(SingleMethodModule):
-    title = 'POS Tagger'
+    title = '成分标记'
     attribute = 'pos_tagger'
     enabled = settings.Setting(False)
 
@@ -550,9 +550,9 @@ class POSTaggingModule(SingleMethodModule):
         # cannot be done in superclass due to StanfordPOSTagger
         self.methods = [method() for method in self.methods[:self.STANFORD]]
 
-        self.stanford = ResourceLoader(widget=self.master, model_format='Stanford model (*.model *.tagger)',
+        self.stanford = ResourceLoader(widget=self.master, model_format='Stanford模型 (*.model *.tagger)',
                                        provider_format='Java file (*.jar)',
-                                       model_button_label='Model', provider_button_label='Tagger')
+                                       model_button_label='模型', provider_button_label='标记器')
         self.set_stanford_tagger(self.stanford.model_path, self.stanford.resource_path, silent=True)
 
         self.stanford.valueChanged.connect(self.set_stanford_tagger)
@@ -620,22 +620,20 @@ class OWPreprocess(OWWidget):
 
     UserAdviceMessages = [
         widget.Message(
-            "Some preprocessing methods require data (like word relationships, stop words, "
-            "punctuation rules etc.) from the NLTK package. This data was downloaded "
-            "to: {}".format(nltk_data_dir()),
-            "nltk_data")]
+            "部分预处理所需要的数据（例如词汇关系、停用词、标点符号规则等）是从NLTK包中获取的，",
+            "这些数据可以从{}下载。".format(nltk_data_dir()))]
 
     class Error(OWWidget.Error):
-        stanford_tagger = Msg("Problem while loading Stanford POS Tagger\n{}")
-        stopwords_encoding = Msg("Invalid stopwords file encoding. Please save the file as UTF-8 and try again.")
-        lexicon_encoding = Msg("Invalid lexicon file encoding. Please save the file as UTF-8 and try again.")
-        error_reading_stopwords = Msg("Error reading file: {}")
-        error_reading_lexicon = Msg("Error reading file: {}")
+        stanford_tagger = Msg("无法加载Stanford POS Tagger\n{}")
+        stopwords_encoding = Msg("停用词表编码不正确，请使用 UTF-8 再试一次。")
+        lexicon_encoding = Msg("词典编码不正确，请使用 UTF-8 再试一次。")
+        error_reading_stopwords = Msg("读取文件错误: {}")
+        error_reading_lexicon = Msg("读取文件错误: {}")
 
     class Warning(OWWidget.Warning):
-        no_token_left = Msg('No tokens on output! Please, change configuration.')
-        udpipe_offline = Msg('No internet connection! UDPipe now only works with local models.')
-        udpipe_offline_no_models = Msg('No internet connection and no local UDPipe models are available.')
+        no_token_left = Msg('没有标记输出，请重新配置')
+        udpipe_offline = Msg('没有网络连接，UDPipe 只加载本地模型')
+        udpipe_offline_no_models = Msg('没有网络连接，UDPipe无本地模型')
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -644,7 +642,7 @@ class OWPreprocess(OWWidget):
         self.preprocessor = preprocess.Preprocessor()
 
         # -- INFO --
-        info_box = gui.widgetBox(self.controlArea, 'Info')
+        info_box = gui.widgetBox(self.controlArea, '基本信息')
         info_box.setFixedWidth(self.control_area_width)
         self.controlArea.layout().addStretch()
         self.info_label = gui.label(info_box, self, '')
@@ -683,7 +681,7 @@ class OWPreprocess(OWWidget):
         self.report_button.setFixedWidth(self.control_area_width)
 
         commit_button = gui.auto_commit(self.buttonsArea, self, 'autocommit',
-                                        'Commit', box=False)
+                                        '提交', '自动提交',box=False)
         commit_button.setFixedWidth(self.control_area_width - 5)
 
         self.buttonsArea.layout().addWidget(commit_button)
@@ -696,12 +694,12 @@ class OWPreprocess(OWWidget):
 
     def update_info(self, corpus=None):
         if corpus is not None:
-            info = 'Document count: {}\n' \
-                   'Total tokens: {}\n'\
-                   'Total types: {}'\
+            info = '文档数量: {}\n' \
+                   '标记数量: {}\n'\
+                   '类型数量: {}'\
                    .format(len(corpus), sum(map(len, corpus.tokens)), len(corpus.dictionary))
         else:
-            info = 'No corpus.'
+            info = '没有数据集'
         self.info_label.setText(info)
 
     def commit(self):

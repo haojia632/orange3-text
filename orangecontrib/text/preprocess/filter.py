@@ -64,7 +64,7 @@ class WordListMixin:
 
 class StopwordsFilter(BaseTokenFilter, WordListMixin):
     """ Remove tokens present in NLTK's language specific lists or a file. """
-    name = 'Stopwords'
+    name = '停用词'
 
     @staticmethod
     @wait_nltk_data
