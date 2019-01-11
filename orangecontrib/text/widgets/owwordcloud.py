@@ -17,7 +17,7 @@ from orangecontrib.text.topics import Topic
 
 
 class OWWordCloud(widget.OWWidget):
-    name = "Word Cloud"
+    name = "词云"
     priority = 510
     icon = "icons/WordCloud.svg"
 

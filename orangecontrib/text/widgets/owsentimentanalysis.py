@@ -9,8 +9,8 @@ from orangecontrib.text.sentiment import Vader_Sentiment, Liu_Hu_Sentiment
 
 
 class OWSentimentAnalysis(OWWidget):
-    name = "Sentiment Analysis"
-    description = "Predict sentiment from text."
+    name = "语义情感分析"
+    description = "基于文本的情感分析"
     icon = "icons/SentimentAnalysis.svg"
     priority = 320
 

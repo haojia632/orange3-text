@@ -27,13 +27,15 @@ class Map:
     WORLD = 'world_mill_en'
     EUROPE = 'europe_mill_en'
     USA = 'us_aea_en'
-    all = (('World',  WORLD),
-           ('Europe', EUROPE),
-           ('USA',    USA))
+    CHINA = 'china_en'
+    all = (('世界',  WORLD),
+           ('欧洲', EUROPE),
+           ('美国',  USA),
+           ('中国', CHINA))
 
 
 class OWGeoMap(widget.OWWidget):
-    name = "GeoMap"
+    name = "世界地图"
     priority = 530
     icon = "icons/GeoMap.svg"
 
@@ -191,9 +193,9 @@ def main():
         'Alabama AL Texas TX TX TX MS Montana US-MT MT'.split(),
     ])
     metas = [
-        StringVariable('World'),
-        StringVariable('Europe'),
-        StringVariable('USA'),
+        StringVariable('世界'),
+        StringVariable('欧洲'),
+        StringVariable('美国'),
     ]
     domain = Domain([], metas=metas)
     table = Table.from_numpy(domain,

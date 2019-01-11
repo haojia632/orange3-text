@@ -25,8 +25,8 @@ class Output:
 
 
 class OWPubmed(OWWidget):
-    name = 'Pubmed'
-    description = 'Fetch data from Pubmed.'
+    name = 'PUBMED数据库'
+    description = '从PUBMET获取数据'
     icon = 'icons/Pubmed.svg'
     priority = 140
 

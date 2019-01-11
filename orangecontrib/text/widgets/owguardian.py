@@ -17,7 +17,7 @@ from orangecontrib.text.widgets.utils import CheckListLayout, QueryBox, DatePick
 
 class OWGuardian(OWWidget):
     class CredentialsDialog(OWWidget):
-        name = 'The Guardian Credentials'
+        name = '英国卫报请求秘钥'
         want_main_area = False
         resizing_enabled = False
         cm_key = CredentialManager('The Guardian API Key')
@@ -64,8 +64,8 @@ class OWGuardian(OWWidget):
             elif not silent:
                 self.Error.invalid_credentials()
 
-    name = 'The Guardian'
-    description = 'Fetch articles from The Guardian API.'
+    name = '英国卫报'
+    description = '从卫报网站获取信息'
     icon = 'icons/TheGuardian.svg'
     priority = 120
 

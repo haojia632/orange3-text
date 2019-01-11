@@ -14,7 +14,7 @@ from orangecontrib.text.widgets.utils import (ComboBox, ListEdit,
 
 class OWTwitter(OWWidget):
     class APICredentialsDialog(OWWidget):
-        name = 'Twitter API Credentials'
+        name = 'Twitter API秘钥'
         want_main_area = False
         resizing_enabled = False
 
@@ -72,8 +72,8 @@ class OWTwitter(OWWidget):
             elif not silent:
                 self.Error.invalid_credentials()
 
-    name = 'Twitter'
-    description = 'Load tweets from the Twitter API.'
+    name = '推特'
+    description = '从推特加载数据'
     icon = 'icons/Twitter.svg'
     priority = 150
 

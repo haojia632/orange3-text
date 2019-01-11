@@ -171,8 +171,8 @@ class ConcordanceModel(QAbstractTableModel):
 
 
 class OWConcordance(OWWidget):
-    name = "Concordance"
-    description = "Display the context of the word."
+    name = "上下文"
+    description = "显示词汇的上下文"
     icon = "icons/Concordance.svg"
     priority = 520
 

@@ -20,8 +20,8 @@ from orangecontrib.text.corpus import Corpus
 
 
 class OWCorpusViewer(OWWidget):
-    name = "Corpus Viewer"
-    description = "Display corpus contents."
+    name = "查看语料库"
+    description = "展示语料库的内容"
     icon = "icons/CorpusViewer.svg"
     priority = 500
 

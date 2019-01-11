@@ -15,8 +15,8 @@ from orangecontrib.text.vectorization import BowVectorizer
 
 class OWWordEnrichment(OWWidget):
     # Basic widget info
-    name = "Word Enrichment"
-    description = "Word enrichment analysis for selected documents."
+    name = "词汇增强"
+    description = "选中文档的增强词汇分析"
     icon = "icons/SetEnrichment.svg"
     priority = 600
 

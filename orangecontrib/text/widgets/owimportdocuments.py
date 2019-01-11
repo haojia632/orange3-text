@@ -68,8 +68,8 @@ class State(enum.IntEnum):
 
 
 class OWImportDocuments(widget.OWWidget):
-    name = "Import Documents"
-    description = "Import text documents from folders."
+    name = "导入文档"
+    description = "从文件夹中导入文档"
     icon = "icons/ImportDocuments.svg"
     priority = 110
 
@@ -89,7 +89,7 @@ class OWImportDocuments(widget.OWWidget):
 
 
     class Warning(widget.OWWidget.Warning):
-        read_error = widget.Msg("{} couldn't be read.")
+        read_error = widget.Msg("{} 无法读取")
 
 
     def __init__(self):
@@ -115,16 +115,16 @@ class OWImportDocuments(widget.OWWidget):
         self.recent_cb.activated[int].connect(self.__onRecentActivated)
 
         browseaction = QAction(
-            "Open/Load Documents", self,
+            "打开/加载文档", self,
             iconText="\N{HORIZONTAL ELLIPSIS}",
             icon=self.style().standardIcon(QStyle.SP_DirOpenIcon),
-            toolTip="Select a folder from which to load the documents"
+            toolTip="选择一个文件夹"
         )
         browseaction.triggered.connect(self.__runOpenDialog)
         reloadaction = QAction(
-            "Reload", self,
+            "重新加载", self,
             icon=self.style().standardIcon(QStyle.SP_BrowserReload),
-            toolTip="Reload current document set"
+            toolTip="重新加载文档集"
         )
         reloadaction.triggered.connect(self.reload)
         self.__actions = namespace(
@@ -154,11 +154,11 @@ class OWImportDocuments(widget.OWWidget):
         reloadaction.changed.connect(
             lambda: reloadbutton.setEnabled(reloadaction.isEnabled())
         )
-        box = gui.vBox(vbox, "Info")
+        box = gui.vBox(vbox, "基本信息")
         self.infostack = QStackedWidget()
 
         self.info_area = QLabel(
-            text="No document set selected",
+            text="没有文档",
             wordWrap=True
         )
         self.progress_widget = QProgressBar(
@@ -239,7 +239,7 @@ class OWImportDocuments(widget.OWWidget):
         if self.recent_paths:
             startdir = os.path.dirname(self.recent_paths[0].abspath)
 
-        caption = "Select Top Level Folder"
+        caption = "选择顶层文档"
         if OWImportDocuments.Modality == Qt.WindowModal:
             dlg = QFileDialog(
                 self, caption, startdir,
@@ -276,7 +276,7 @@ class OWImportDocuments(widget.OWWidget):
 
     def __updateInfo(self):
         if self.__state == State.NoState:
-            text = "No document set selected"
+            text = "没有选择文档"
         elif self.__state == State.Processing:
             text = "Processing"
         elif self.__state == State.Done:
@@ -284,15 +284,15 @@ class OWImportDocuments(widget.OWWidget):
             ncategories = self.n_text_categories
             n_skipped = self.n_skipped
             if ncategories < 2:
-                text = "{} document{}".format(nvalid, "s" if nvalid != 1 else "")
+                text = "{} 个文档{}".format(nvalid, "s" if nvalid != 1 else "")
             else:
-                text = "{} documents / {} categories".format(nvalid, ncategories)
+                text = "{} 个文档 / {} 个类别".format(nvalid, ncategories)
             if n_skipped > 0:
-                text = text + ", {} skipped".format(n_skipped)
+                text = text + ", {} 跳过".format(n_skipped)
         elif self.__state == State.Cancelled:
-            text = "Cancelled"
+            text = "取消"
         elif self.__state == State.Error:
-            text = "Error state"
+            text = "错误状态"
         else:
             assert False
 
@@ -330,11 +330,11 @@ class OWImportDocuments(widget.OWWidget):
         error = None
         if path is not None:
             if not os.path.exists(path):
-                error = "'{}' does not exist".format(path)
+                error = "'{}' 不存在".format(path)
                 path = None
                 success = False
             elif not os.path.isdir(path):
-                error = "'{}' is not a folder".format(path)
+                error = "'{}' 不是文件夹".format(path)
                 path = None
                 success = False
 
@@ -405,14 +405,14 @@ class OWImportDocuments(widget.OWWidget):
                                     State.NoState,
                                     State.Error,
                                     State.Cancelled]
-            message = "Processing"
+            message = "处理中..."
         elif state == State.Done:
             assert self.__state == State.Processing
         elif state == State.Cancelled:
             assert self.__state == State.Processing
-            message = "Cancelled"
+            message = "取消"
         elif state == State.Error:
-            message = "Error during processing"
+            message = "处理过程中出错"
         elif state == State.NoState:
             message = ""
         else:
@@ -452,8 +452,8 @@ class OWImportDocuments(widget.OWWidget):
 
         if self.__state == State.Processing:
             assert self.__pendingTask is not None
-            log.info("Starting a new task while one is in progress. "
-                     "Cancel the existing task (dir:'{}')"
+            log.info("启动新任务，另一个任务正在运行中 "
+                     "取消已有的任务 (dir:'{}')"
                      .format(self.__pendingTask.startdir))
             self.cancel()
 
@@ -488,7 +488,7 @@ class OWImportDocuments(widget.OWWidget):
                 except UserInterruptError:
                     pass
                 except TimeoutError:
-                    log.info("The task did not stop in in a timely manner")
+                    log.info("任务未及时停止")
             taskstate.watcher.finished.disconnect(self.__onRunFinished)
 
         taskstate.cancel = cancel
@@ -608,11 +608,11 @@ class OWImportDocuments(widget.OWWidget):
         if not self.currentPath:
             return
         items = [('Path', self.currentPath),
-                 ('Number of documents', self.n_text_data)]
+                 ('文档数量', self.n_text_data)]
         if self.n_text_categories:
             items += [('Categories', self.n_text_categories)]
         if self.n_skipped:
-            items += [('Number of skipped', self.n_skipped)]
+            items += [('跳过数量', self.n_skipped)]
         self.report_items(items, )
 
 

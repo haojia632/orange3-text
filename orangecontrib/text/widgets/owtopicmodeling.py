@@ -97,8 +97,8 @@ def require(attribute):
 
 
 class OWTopicModeling(OWWidget):
-    name = "Topic Modelling"
-    description = "Uncover the hidden thematic structure in a corpus."
+    name = "主题建模"
+    description = "对语料库进行主题建模"
     icon = "icons/TopicModeling.svg"
     priority = 400
 

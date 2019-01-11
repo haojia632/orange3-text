@@ -372,7 +372,7 @@ class FilteringModule(MultipleMethodModule):
         preprocess.LexiconFilter,
         preprocess.RegexpFilter,
         preprocess.FrequencyFilter,
-        DummyKeepgitN,
+        DummyKeepN,
     ]
     checked = settings.Setting([0])
     STOPWORDS = 0

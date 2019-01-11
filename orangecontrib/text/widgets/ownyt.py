@@ -62,8 +62,8 @@ class OWNYT(OWWidget):
             elif not silent:
                 self.Error.invalid_credentials()
 
-    name = "NY Times 郝佳"
-    description = "Fetch articles from the New York Times search API."
+    name = "纽约时报"
+    description = "从纽约时报网站获取新闻数据"
     icon = "icons/NYTimes.svg"
     priority = 130
 
@@ -81,14 +81,14 @@ class OWNYT(OWWidget):
     text_includes = Setting([feat.name for feat in NYT.text_features])
 
     class Warning(OWWidget.Warning):
-        no_text_fields = Msg('Text features are inferred when none are selected.')
+        no_text_fields = Msg('未选择文字功能时，将推断文字功能')
 
     class Error(OWWidget.Error):
-        no_api = Msg('Please provide a valid API key.')
-        no_query = Msg('Please provide a query.')
-        offline = Msg('No internet connection.')
-        api_error = Msg('API error: {}')
-        rate_limit = Msg('Rate limit exceeded. Please try again later.')
+        no_api = Msg('请提供合法的API关键字')
+        no_query = Msg('请提供请求')
+        offline = Msg('没有网络连接')
+        api_error = Msg('API 错误: {}')
+        rate_limit = Msg('超过速率限制，请稍后再试')
 
     def __init__(self):
         super().__init__()
@@ -101,11 +101,11 @@ class OWNYT(OWWidget):
         # API key
         self.api_dlg = self.APICredentialsDialog(self)
         self.api_dlg.accept(silent=True)
-        gui.button(self.controlArea, self, 'Article API Key', callback=self.api_dlg.exec_,
+        gui.button(self.controlArea, self, '请求秘钥设置', callback=self.api_dlg.exec_,
                    focusPolicy=Qt.NoFocus)
 
         # Query
-        query_box = gui.widgetBox(self.controlArea, 'Query', addSpace=True)
+        query_box = gui.widgetBox(self.controlArea, '请求', addSpace=True)
         self.query_box = QueryBox(query_box, self, self.recent_queries,
                                   callback=self.new_query_input)
 
@@ -117,17 +117,17 @@ class OWNYT(OWWidget):
 
         # Text includes features
         self.controlArea.layout().addWidget(
-            CheckListLayout('Text includes', self, 'text_includes', self.attributes,
+            CheckListLayout('包含的内容', self, 'text_includes', self.attributes,
                             cols=2, callback=self.set_text_features))
 
         # Output
-        info_box = gui.hBox(self.controlArea, 'Output')
-        gui.label(info_box, self, 'Articles: %(output_info)s')
+        info_box = gui.hBox(self.controlArea, '输出')
+        gui.label(info_box, self, '文章: %(output_info)s')
 
         # Buttons
         self.button_box = gui.hBox(self.controlArea)
 
-        self.search_button = gui.button(self.button_box, self, 'Search', self.start_stop,
+        self.search_button = gui.button(self.button_box, self, '搜索', self.start_stop,
                                         focusPolicy=Qt.NoFocus)
 
     def new_query_input(self):
@@ -167,12 +167,12 @@ class OWNYT(OWWidget):
         self.num_all, self.num_retrieved = 0, 0
         self.update_info_label()
         self.progressBarInit(None)
-        self.search_button.setText('Stop')
+        self.search_button.setText('停止')
         self.Outputs.corpus.send(None)
 
     @search.on_result
     def on_result(self, result):
-        self.search_button.setText('Search')
+        self.search_button.setText('搜索')
         self.corpus = result
         self.set_text_features()
         self.progressBarFinished(None)

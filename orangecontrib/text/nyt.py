@@ -37,21 +37,21 @@ class NYT:
         (data.DiscreteVariable('Section'), lambda doc: doc.get('section_name', None)),
     ]
 
-    tv = data.TimeVariable('Publication Date')
+    tv = data.TimeVariable('发表日期')
     metas = [
-        (data.StringVariable('Headline'), lambda doc: doc.get('headline', {}).get('main') or ''),
-        (data.StringVariable('Abstract'), lambda doc: doc.get('abstract') or ''),
-        (data.StringVariable('Snippet'), lambda doc: doc.get('snippet') or ''),
-        (data.StringVariable('Lead Paragraph'), lambda doc: doc.get('lead_paragraph') or ''),
-        (data.StringVariable('Subject Keywords'), lambda doc: NYT.keywords(doc, 'subject')),
+        (data.StringVariable('标题'), lambda doc: doc.get('headline', {}).get('main') or ''),
+        (data.StringVariable('摘要'), lambda doc: doc.get('abstract') or ''),
+        (data.StringVariable('片段'), lambda doc: doc.get('snippet') or ''),
+        (data.StringVariable('主体'), lambda doc: doc.get('lead_paragraph') or ''),
+        (data.StringVariable('关键词'), lambda doc: NYT.keywords(doc, 'subject')),
         (data.StringVariable('URL'), lambda doc: doc.get('web_url') or ''),
-        (data.StringVariable('Locations'), lambda doc: NYT.keywords(doc, 'glocations')),
-        (data.StringVariable('Persons'), lambda doc: NYT.keywords(doc, 'persons')),
-        (data.StringVariable('Organizations'), lambda doc: NYT.keywords(doc, 'organizations')),
-        (data.StringVariable('Creative Works'), lambda doc: NYT.keywords(doc, 'creative_works')),
+        (data.StringVariable('位置'), lambda doc: NYT.keywords(doc, 'glocations')),
+        (data.StringVariable('人物'), lambda doc: NYT.keywords(doc, 'persons')),
+        (data.StringVariable('组织'), lambda doc: NYT.keywords(doc, 'organizations')),
+        (data.StringVariable('创作'), lambda doc: NYT.keywords(doc, 'creative_works')),
         (tv, lambda doc: NYT.tv.parse(doc.get('pub_date'))),
-        (data.DiscreteVariable('Article Type'), lambda doc: doc.get('type_of_material', None)),
-        (data.ContinuousVariable('Word Count', number_of_decimals=0), lambda doc: doc.get('word_count', None)),
+        (data.DiscreteVariable('类型'), lambda doc: doc.get('type_of_material', None)),
+        (data.ContinuousVariable('字数', number_of_decimals=0), lambda doc: doc.get('word_count', None)),
     ]
 
     text_features = [metas[0][0], metas[1][0]]  # headline + abstract

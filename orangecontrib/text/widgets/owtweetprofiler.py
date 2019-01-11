@@ -10,9 +10,8 @@ from orangecontrib.text.corpus import Corpus
 
 
 class OWTweetProfiler(OWWidget):
-    name = "Tweet Profiler"
-    description = "Detect Ekman's, Plutchik's or Profile of Mood States's " \
-                  "emotions in tweets."
+    name = "Tweet情感分析"
+    description = "检测推特中的情感"
     icon = "icons/TweetProfiler.svg"
     priority = 330
 

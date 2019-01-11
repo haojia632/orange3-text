@@ -8,8 +8,8 @@ from orangecontrib.text.widgets.utils import owbasevectorizer
 
 
 class OWSimhash(owbasevectorizer.OWBaseVectorizer):
-    name = 'Similarity Hashing'
-    description = 'Computes documents hashes.'
+    name = '文本相似度计算'
+    description = '计算文本的相似度'
     icon = 'icons/Simhash.svg'
     priority = 310
 

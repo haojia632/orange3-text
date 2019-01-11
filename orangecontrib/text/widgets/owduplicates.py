@@ -15,8 +15,8 @@ from orangecontrib.text import Corpus
 
 
 class OWDuplicates(widget.OWWidget):
-    name = 'Duplicate Detection'
-    description = 'Detect & remove duplicates from a corpus.'
+    name = '重复文档检测'
+    description = '检测和删除语料库中的重复文档'
     icon = 'icons/Duplicates.svg'
     priority = 700
 

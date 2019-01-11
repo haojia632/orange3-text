@@ -199,7 +199,7 @@ class DatePicker(QDateEdit):
 
 class DatePickerInterval(QWidget):
     def __init__(self, widget, master, attribute_from, attribute_to, min_date=None, max_date=None,
-                 label_from='From:', label_to='To:', margin=(0, 0, 0, 0)):
+                 label_from='从:', label_to='到:', margin=(0, 0, 0, 0)):
         super().__init__()
         self.setParent(widget)
 
