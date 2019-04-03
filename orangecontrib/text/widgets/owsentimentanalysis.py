@@ -15,10 +15,10 @@ class OWSentimentAnalysis(OWWidget):
     priority = 320
 
     class Inputs:
-        corpus = Input("Corpus", Corpus)
+        corpus = Input("语料库", Corpus)
 
     class Outputs:
-        corpus = Output("Corpus", Corpus)
+        corpus = Output("语料库", Corpus)
 
     method_idx = settings.Setting(1)
     autocommit = settings.Setting(True)

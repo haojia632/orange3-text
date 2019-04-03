@@ -22,13 +22,13 @@ class OWWordCloud(widget.OWWidget):
     icon = "icons/WordCloud.svg"
 
     class Inputs:
-        corpus = Input("Corpus", Corpus, default=True)
-        topic = Input("Topic", Topic)
+        corpus = Input("语料库", Corpus, default=True)
+        topic = Input("主题", Topic)
 
     class Outputs:
-        corpus = Output("Corpus", Corpus)
-        selected_words = Output("Selected Words", Topic, dynamic=False)
-        word_counts = Output("Word Counts", Table)
+        corpus = Output("语料库", Corpus)
+        selected_words = Output("所选词汇", Topic, dynamic=False)
+        word_counts = Output("词汇数量", Table)
 
     graph_name = 'webview'
 

@@ -40,10 +40,10 @@ class OWGeoMap(widget.OWWidget):
     icon = "icons/GeoMap.svg"
 
     class Inputs:
-        data = Input("Data", Table)
+        data = Input("数据", Table)
 
     class Outputs:
-        corpus = Output("Corpus", Corpus)
+        corpus = Output("语料库", Corpus)
 
     want_main_area = False
 
@@ -75,13 +75,13 @@ class OWGeoMap(widget.OWWidget):
         self.varmodel = VariableListModel(parent=self)
         self.attr_combo = gui.comboBox(box, self, 'selected_attr',
                                        orientation=Qt.Horizontal,
-                                       label='Region attribute:',
+                                       label='区域属性:',
                                        callback=self.on_attr_change,
                                        sendSelectedValue=True)
         self.attr_combo.setModel(self.varmodel)
         self.map_combo = gui.comboBox(box, self, 'selected_map',
                                       orientation=Qt.Horizontal,
-                                      label='Map type:',
+                                      label='地图类型:',
                                       callback=self.on_map_change,
                                       items=Map.all)
         hexpand = QSizePolicy(QSizePolicy.Expanding,

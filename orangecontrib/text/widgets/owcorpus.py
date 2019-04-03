@@ -19,10 +19,10 @@ class OWCorpus(OWWidget):
     replaces = ["orangecontrib.text.widgets.owloadcorpus.OWLoadCorpus"]
 
     class Inputs:
-        data = Input('Data', Table)
+        data = Input('数据集', Table)
 
     class Outputs:
-        corpus = Output('Corpus', Corpus)
+        corpus = Output('语料库', Corpus)
 
     want_main_area = False
     resizing_enabled = True

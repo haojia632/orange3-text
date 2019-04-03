@@ -765,5 +765,3 @@ if __name__ == '__main__':
     widget.set_data(corpus)
     app.exec()
     widget.saveSettings()
-
-

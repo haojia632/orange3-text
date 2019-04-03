@@ -106,12 +106,12 @@ class OWTopicModeling(OWWidget):
 
     # Input/output
     class Inputs:
-        corpus = Input("Corpus", Corpus)
+        corpus = Input("语料库", Corpus)
 
     class Outputs:
-        corpus = Output("Corpus", Table)
-        selected_topic = Output("Selected Topic", Topic)
-        all_topics = Output("All Topics", Table)
+        corpus = Output("语料库", Table)
+        selected_topic = Output("所选主题", Topic)
+        all_topics = Output("所有主题", Table)
 
     want_main_area = True
 
